@@ -6,14 +6,14 @@ pipeline {
                 // step1 
                 echo 'compiling..'
 		            git url: 'https://github.com/dipayanr/sample-petclinic-app'
-		            sh script: '/usr/share/maven compile'
+		            sh script: '/usr/share/maven/bin/mvn compile'
            }
         }
         stage('codereview-pmd') {
 	         steps {
                 // step2
                 echo 'codereview..'
-		            sh script: '/usr/share/maven -P metrics pmd:pmd'
+		            sh script: '/usr/share/maven/bin/mvn -P metrics pmd:pmd'
            }
 	         post {
                success {
@@ -25,7 +25,7 @@ pipeline {
 	          steps {
                 // step3
                 echo 'unittest..'
-	               sh script: '/usr/share/maven test'
+	               sh script: '/usr/share/maven/bin/mvn test'
             }
 	          post {
                success {
@@ -41,7 +41,7 @@ pipeline {
 	         steps {
                 // step4
                 echo 'codecoverage..'
-		            sh script: '/usr/share/maven cobertura:cobertura -Dcobertura.report.format=xml'
+		            sh script: '/usr/share/maven/bin/mvn cobertura:cobertura -Dcobertura.report.format=xml'
            }
 	         post {
                success {
@@ -53,7 +53,7 @@ pipeline {
 	         steps {
                 // step5
                 echo 'package......'
-		            sh script: '/usr/share/maven package'	
+		            sh script: '/usr/share/maven/bin/mvn package'	
            }		
         }
     }
