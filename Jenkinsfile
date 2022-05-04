@@ -5,15 +5,15 @@ pipeline {
 	         steps {
                 // step1 
                 echo 'compiling..'
-		            git url: 'https://github.com/lerndevops/PetClinic'
-		            sh script: '/opt/maven/bin/mvn compile'
+		            git url: 'https://github.com/dipayanr/sample-petclinic-app'
+		            sh script: '/usr/share/maven compile'
            }
         }
         stage('codereview-pmd') {
 	         steps {
                 // step2
                 echo 'codereview..'
-		            sh script: '/opt/maven/bin/mvn -P metrics pmd:pmd'
+		            sh script: '/usr/share/maven -P metrics pmd:pmd'
            }
 	         post {
                success {
@@ -25,7 +25,7 @@ pipeline {
 	          steps {
                 // step3
                 echo 'unittest..'
-	               sh script: '/opt/maven/bin/mvn test'
+	               sh script: '/usr/share/maven test'
             }
 	          post {
                success {
@@ -36,12 +36,12 @@ pipeline {
         stage('codecoverage') {
 
            tools {
-              jdk 'java1.8'
+              jdk 'my-jdk-1.8'
            }
 	         steps {
                 // step4
                 echo 'codecoverage..'
-		            sh script: '/opt/maven/bin/mvn cobertura:cobertura -Dcobertura.report.format=xml'
+		            sh script: '/usr/share/maven cobertura:cobertura -Dcobertura.report.format=xml'
            }
 	         post {
                success {
@@ -53,7 +53,7 @@ pipeline {
 	         steps {
                 // step5
                 echo 'package......'
-		            sh script: '/opt/maven/bin/mvn package'	
+		            sh script: '/usr/share/maven package'	
            }		
         }
     }
